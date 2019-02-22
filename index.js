@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //all data recieved by post method parse in json
 app.use(bodyParser.json());
 
-consign().include('routes').into(app);
+consign().include('routes').include('utils').into(app);
 
 app.listen(3000, '127.0.0.1', () => {
     console.log('Server is running');
