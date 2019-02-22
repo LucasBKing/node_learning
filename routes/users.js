@@ -6,14 +6,20 @@ let db = new NeDB({
 
 module.exports = (app) => {
     app.get('/users', (req,res) => {
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'application/json');
-        res.json({
-            users: [{
-                name: 'LucasBKing',
-                email: 'ldsbarbosa@inf.ufpel.edu.br',
-                id: 1
-            }]
+
+        db.find({}).sort({name:1}).exec((err, users) => {
+            if (err) {
+                console.log(`Error: ${err}`);
+                res.status(400).json({
+                    error: err
+                });
+            } else {
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                res.json({
+                    users
+                });
+            }
         });
     });
     
